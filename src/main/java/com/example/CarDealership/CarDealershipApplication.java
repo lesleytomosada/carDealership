@@ -35,8 +35,11 @@ public class CarDealershipApplication implements CommandLineRunner {
 //		dealershipList.forEach(System.out::println);
 //		List<Vehicle> vehicleList = vehicleRepository.getAllVehicles();
 //		vehicleList.forEach(System.out::println);
-		List<Vehicle> vehiclesByPrice = vehicleRepository.getVehiclesByPrice(1,100000);
-		vehiclesByPrice.forEach(System.out::println);
+//		List<Vehicle> vehiclesByPrice = vehicleRepository.getVehiclesByPrice(1,100000);
+//		vehiclesByPrice.forEach(System.out::println);
+		List<Vehicle> vehiclesByMakeModel= vehicleRepository.getVehiclesByMakeModel("bmw","m2");
+		vehiclesByMakeModel.forEach(System.out::println);
+
 	}
 
 }

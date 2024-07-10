@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Repository
 public class VehicleRepository {
@@ -46,6 +47,27 @@ public class VehicleRepository {
         PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setDouble(1, minPrice);
             ps.setDouble(2, maxPrice);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Vehicle v = mapRowToVehicle(rs);
+                    vehicles.add(v);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return vehicles;
+    }
+
+    public List<Vehicle> getVehiclesByMakeModel(String make, String model){
+        String query = "SELECT * FROM vehicles WHERE LOWER(make) = ? AND LOWER(model) = ?";
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        try(Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, make.toLowerCase());
+            ps.setString(2, model.toLowerCase());
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Vehicle v = mapRowToVehicle(rs);
