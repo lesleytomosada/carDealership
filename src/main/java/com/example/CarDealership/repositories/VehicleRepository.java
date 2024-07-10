@@ -2,6 +2,7 @@ package com.example.CarDealership.repositories;
 
 import com.example.CarDealership.models.Dealership;
 import com.example.CarDealership.models.Vehicle;
+import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,11 +28,32 @@ public class VehicleRepository {
                 PreparedStatement ps = conn.prepareStatement(query);
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                Vehicle d = mapRowToVehicle(rs);
-                vehicles.add(d);
+                Vehicle v = mapRowToVehicle(rs);
+                vehicles.add(v);
             }
         }
         catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return vehicles;
+    }
+
+    public List<Vehicle> getVehiclesByPrice(double minPrice, double maxPrice){
+        String query = "SELECT * FROM vehicles WHERE price >= ? AND price <= ?";
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        try(Connection conn = dataSource.getConnection();
+        PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setDouble(1, minPrice);
+            ps.setDouble(2, maxPrice);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Vehicle v = mapRowToVehicle(rs);
+                    vehicles.add(v);
+                }
+            }
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
         }
         return vehicles;

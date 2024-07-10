@@ -33,8 +33,10 @@ public class CarDealershipApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception{
 //		List<Dealership> dealershipList = dealershipRepository.getAllDealerships();
 //		dealershipList.forEach(System.out::println);
-		List<Vehicle> vehicleList = vehicleRepository.getAllVehicles();
-		vehicleList.forEach(System.out::println);
+//		List<Vehicle> vehicleList = vehicleRepository.getAllVehicles();
+//		vehicleList.forEach(System.out::println);
+		List<Vehicle> vehiclesByPrice = vehicleRepository.getVehiclesByPrice(1,100000);
+		vehiclesByPrice.forEach(System.out::println);
 	}
 
 }
