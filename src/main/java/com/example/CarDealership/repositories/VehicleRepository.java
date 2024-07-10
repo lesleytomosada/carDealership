@@ -81,6 +81,27 @@ public class VehicleRepository {
         return vehicles;
     }
 
+    public List<Vehicle> getVehiclesByYear(int minYear, int maxYear){
+        String query = "SELECT * FROM vehicles WHERE year >= ? AND year <= ?";
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        try(Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setDouble(1, minYear);
+            ps.setDouble(2, maxYear);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Vehicle v = mapRowToVehicle(rs);
+                    vehicles.add(v);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return vehicles;
+    }
+
     private Vehicle mapRowToVehicle(ResultSet rs) throws SQLException {
         int vehicleId = rs.getInt("vehicle_id");
         String vin = rs.getString("vin");
