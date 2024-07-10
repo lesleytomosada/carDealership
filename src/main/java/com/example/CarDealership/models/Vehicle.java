@@ -1,7 +1,7 @@
 package com.example.CarDealership.models;
 
 public class Vehicle {
-    private int id;
+    private int vehicleId;
     private String vin;
     private int year;
     private String make;
@@ -11,9 +11,10 @@ public class Vehicle {
     private double price;
     private boolean sold;
 
-    public Vehicle(int id, String vin, int year, String make, String model, String color, int mileage, double price,
+    public Vehicle(int vehicleId, String vin, int year, String make, String model, String color, int mileage,
+            double price,
             boolean sold) {
-        this.id = id;
+        this.vehicleId = vehicleId;
         this.vin = vin;
         this.year = year;
         this.make = make;
@@ -24,12 +25,12 @@ public class Vehicle {
         this.sold = sold;
     }
 
-    public int getId() {
-        return id;
+    public int getVehicleId() {
+        return vehicleId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setVehicle(int vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public String getVin() {
@@ -94,5 +95,23 @@ public class Vehicle {
 
     public void setSold(boolean sold) {
         this.sold = sold;
+    }
+
+    @Override
+    public String toString() {
+        // Define column widths
+        int idWidth = 10;
+        int vinWidth = 20;
+        int yearWidth = 6;
+        int makeWidth = 15;
+        int modelWidth = 15;
+        int colorWidth = 10;
+        int mileageWidth = 10;
+        int priceWidth = 10;
+        int soldWidth = 5;
+
+        // Format string for each row
+        return String.format("%-" + idWidth + "d %-" + vinWidth + "s %-" + yearWidth + "d %-" + makeWidth + "s %-" + modelWidth + "s %-" + colorWidth + "s %-" + mileageWidth + "d %-" + priceWidth + ".2f %-" + soldWidth + "b",
+                vehicleId, vin, year, make, model, color, mileage, price, sold);
     }
 }
