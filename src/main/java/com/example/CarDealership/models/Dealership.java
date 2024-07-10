@@ -44,4 +44,14 @@ public class Dealership {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    @Override
+    public String toString() {
+        // Define column widths
+        int idWidth = 5;
+        int width = 10;
+
+        // Data row
+        return String.format("%-" + idWidth + "d %-" + width + "s %-" + width + "s %-" + width + "s", dealershipId, name, address, phone);
+    }
 }
