@@ -102,6 +102,67 @@ public class VehicleRepository {
         return vehicles;
     }
 
+    public List<Vehicle> getVehiclesByColor(String color){
+        String query = "SELECT * FROM vehicles WHERE LOWER(color) = ?";
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        try(Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, color.toLowerCase());
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Vehicle v = mapRowToVehicle(rs);
+                    vehicles.add(v);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return vehicles;
+    }
+
+    public List<Vehicle> getVehiclesByMileage(int minMiles, int maxMiles){
+        String query = "SELECT * FROM vehicles WHERE mileage >= ? AND mileage <= ?";
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        try(Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setDouble(1, minMiles);
+            ps.setDouble(2, maxMiles);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Vehicle v = mapRowToVehicle(rs);
+                    vehicles.add(v);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return vehicles;
+    }
+
+    public List<Vehicle> getVehiclesByType(String type){
+        String query = "SELECT * FROM vehicles WHERE LOWER(type) = ?";
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        try(Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, type.toLowerCase());
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Vehicle v = mapRowToVehicle(rs);
+                    vehicles.add(v);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return vehicles;
+    }
+
     private Vehicle mapRowToVehicle(ResultSet rs) throws SQLException {
         int vehicleId = rs.getInt("vehicle_id");
         String vin = rs.getString("vin");

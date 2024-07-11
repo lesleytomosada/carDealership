@@ -19,9 +19,6 @@ public class CarDealershipApplication implements CommandLineRunner {
 	@Autowired
 	private DealershipRepository dealershipRepository;
 
-	@Autowired
-	private DataSourceProperties dataSourceProperties;
-
     @Autowired
     private VehicleRepository vehicleRepository;
 
@@ -40,8 +37,14 @@ public class CarDealershipApplication implements CommandLineRunner {
 //		vehiclesByPrice.forEach(System.out::println);
 //		List<Vehicle> vehiclesByMakeModel= vehicleRepository.getVehiclesByMakeModel("bmw","m2");
 //		vehiclesByMakeModel.forEach(System.out::println);
-		List<Vehicle> vehiclesByYear= vehicleRepository.getVehiclesByYear(1990,2025);
-		vehiclesByYear.forEach(System.out::println);
+//		List<Vehicle> vehiclesByYear= vehicleRepository.getVehiclesByYear(1990, 2025);
+//		vehiclesByYear.forEach(System.out::println);
+//		List<Vehicle> vehiclesByColor = vehicleRepository.getVehiclesByColor("white");
+//		vehiclesByColor.forEach(System.out::println);
+//		List<Vehicle> vehiclesByMileage = vehicleRepository.getVehiclesByMileage(100, 10000);
+//		vehiclesByMileage.forEach(System.out::println);
+		List<Vehicle> vehiclesByType = vehicleRepository.getVehiclesByType("SUV");
+		vehiclesByType.forEach(System.out::println);
 
 	}
 
