@@ -16,9 +16,9 @@ import java.util.List;
 
 @SpringBootApplication
 public class CarDealershipApplication implements CommandLineRunner {
-
 	@Autowired
 	UserInterface carDealership;
+
 	public static void main(String[] args) {
 		SpringApplication.run(CarDealershipApplication.class, args);
 	}

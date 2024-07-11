@@ -140,24 +140,33 @@ public class VehicleRepository {
         return vehicles;
     }
 
-    public List<Vehicle> getVehiclesByType(String type){
-        String query = "SELECT * FROM vehicles WHERE LOWER(type) = ?";
-        List<Vehicle> vehicles = new ArrayList<>();
+    public int createVehicle(Vehicle vehicle){
+        String query = "INSERT INTO vehicles (vin, year, make, model, color, mileage, price, sold) VALUES (?, ?, ?, " +
+                "?, ?, ?, ?, ?) RETURNING vehicle_id";
+        int generatedId = -1;
 
         try(Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, type.toLowerCase());
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Vehicle v = mapRowToVehicle(rs);
-                    vehicles.add(v);
+        PreparedStatement ps = conn.prepareStatement(query)){
+            ps.setString(1, vehicle.getVin());
+            ps.setInt(2, vehicle.getYear());
+            ps.setString(3, vehicle.getMake());
+            ps.setString(4, vehicle.getModel());
+            ps.setString(5, vehicle.getColor());
+            ps.setInt(6, vehicle.getMileage());
+            ps.setDouble(7, vehicle.getPrice());
+            ps.setBoolean(8, vehicle.isSold());
+
+            try(ResultSet rs = ps.executeQuery()){
+                if (rs.next()){
+                    generatedId = rs.getInt(1);
                 }
             }
+
         }
-        catch (SQLException ex) {
+        catch(SQLException ex){
             ex.printStackTrace();
         }
-        return vehicles;
+        return generatedId;
     }
 
     private Vehicle mapRowToVehicle(ResultSet rs) throws SQLException {

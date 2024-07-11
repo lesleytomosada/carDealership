@@ -1,6 +1,5 @@
 package com.example.CarDealership.UserInterface;
 
-import com.example.CarDealership.models.Dealership;
 import com.example.CarDealership.models.Vehicle;
 import com.example.CarDealership.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,38 +169,8 @@ public class UserInterface {
 
         List<Vehicle> mileageFiltered = vehicleRepository.getVehiclesByMileage(min, max);
         displayVehicles(mileageFiltered);
-
     }
 
-//    void processGetByVehicleTypeRequest() {
-//        int choice;
-//        do {
-//            System.out.println("""
-//                    Choose a Vehicle Type:
-//                     1 - Car
-//                     2 - Truck
-//                     3 - SUV
-//                     4 - Van
-//                    """);
-//            choice = scanner.nextInt();
-//            scanner.nextLine();
-//            if (choice < 1 | choice > 4) {
-//                System.out.println("Please choose one of the options above");
-//            }
-//        } while (choice < 1 | choice > 4);
-//
-//        String type = "";
-//
-//        switch(choice){
-//            case 1 -> type = "Car";
-//            case 2 -> type = "Truck";
-//            case 3 -> type = "SUV";
-//            case 4 -> type = "Van";
-//        }
-//
-//        List<Vehicle> typeFiltered = vehicleRepository.getVehiclesByType(type);
-//        displayVehicles(typeFiltered);
-//    }
 
     void processGetAllVehiclesRequest() {
         displayVehicles(vehicleRepository.getAllVehicles());
@@ -209,7 +178,29 @@ public class UserInterface {
     }
 
     void processAddVehicleRequest() {
-
+        System.out.print("What is the vin of the car? ");
+        String vin = scanner.nextLine();
+        System.out.print("What is the year of the car? ");
+        int year = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("What is the make of the car? ");
+        String make = scanner.nextLine();
+        System.out.print("What is the model of the car? ");
+        String model = scanner.nextLine();
+        System.out.print("What is the color of the car? ");
+        String color = scanner.nextLine();
+        System.out.print("What is the mileage of the car? ");
+        int mileage = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("What is the price of the car? ");
+        float price = scanner.nextFloat();
+        scanner.nextLine();
+        System.out.print("Has the car been sold? (Y/N) ");
+        String soldString = scanner.nextLine();
+        boolean sold = soldString.equalsIgnoreCase("y");
+        Vehicle vehicle = new Vehicle(0, vin, year, make, model, color, mileage, price, sold);
+        vehicleRepository.createVehicle(vehicle);
+        System.out.println("Vehicle added.");
     }
 
     void processRemoveVehicleRequest() {
